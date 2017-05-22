@@ -21,9 +21,13 @@ function vertex = stat_read_vtk(file_dir)
     FileNames = dir(sprintf('%s/*.vtk',file_dir));
     FileNames = {FileNames.name}';
     nn=size(FileNames,1);
-
+    
     for ii=1:nn
         filename=sprintf('%s/%s',file_dir,FileNames{ii});
-        vertex(ii,:,:) = stat_read_vtk_file(filename);
+        FileNames{ii} = filename;
+    end
+
+    for ii=1:nn
+        vertex(ii,:,:) = stat_read_vtk_file(FileNames(ii));
     end
 end
