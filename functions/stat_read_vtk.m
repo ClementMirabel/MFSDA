@@ -1,29 +1,35 @@
 function vertex = stat_read_vtk(file_dir)
 
-% stat_read_vtk - read data from VTK file.
-%
-% Inputs:
-%     file_dir:
-%                 the string indicating the directory where all vtk files are stored.
-%
-% Output:
-%     vertex     - a n x L0 x 3 matrix specifying the position of the vertices.
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Copyright (c) Mario Richtsfeld, distributed under BSD license
-% http://www.mathworks.com/matlabcentral/fileexchange/5355-toolbox-graph/content/toolbox_graph/read_vtk.m
-% http://www.ifb.ethz.ch/education/statisticalphysics/file-formats.pdf
-% ftp://ftp.tuwien.ac.at/visual/vtk/www/FileFormats.pdf
-% The vtk format supports a wide range of datasets, Chris Rorden modified
-% March, 2017 @ modified by Chao Huang
+    % stat_read_vtk - read data from VTK file.
+    %
+    % Inputs:
+    %     file_dir:
+    %                 the string indicating the directory where all vtk files are stored.
+    %
+    % Output:
+    %     vertex     - a n x L0 x 3 matrix specifying the position of the vertices.
+    % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Copyright (c) Mario Richtsfeld, distributed under BSD license
+    % http://www.mathworks.com/matlabcentral/fileexchange/5355-toolbox-graph/content/toolbox_graph/read_vtk.m
+    % http://www.ifb.ethz.ch/education/statisticalphysics/file-formats.pdf
+    % ftp://ftp.tuwien.ac.at/visual/vtk/www/FileFormats.pdf
+    % The vtk format supports a wide range of datasets, Chris Rorden modified
+    % March, 2017 @ modified by Chao Huang
 
-%% --- read the file names of all vtk files
+    %% --- read the file names of all vtk files
 
-FileNames = dir(sprintf('%s/*.vtk',file_dir));
-FileNames = {FileNames.name}';
-nn=size(FileNames,1);
+    FileNames = dir(sprintf('%s/*.vtk',file_dir));
+    FileNames = {FileNames.name}';
+    nn=size(FileNames,1);
 
-for ii=1:nn
-    filename=sprintf('%s/%s',file_dir,FileNames{ii});
+    for ii=1:nn
+        filename=sprintf('%s/%s',file_dir,FileNames{ii});
+        vertex_ii = stat_read_vtk_file(filename);
+        vertex(ii,:,:)=vertex_ii';
+    end
+
+function vertex_ii = stat_read_vtk_file(filename)
+
     fid = fopen(filename,'r');
     if( fid==-1 )
         error('Can''t open the VTK file %s',filename);
@@ -53,7 +59,7 @@ for ii=1:nn
     % read vertices
     if isBinary
         cnt = 3*nvert;
-        vtx = fread(fid, cnt, 'float32=>float32');
+        vtx = freafilenamed(fid, cnt, 'float32=>float32');
     else
         [A,cnt] = fscanf(fid,'%f %f %f', 3*nvert);
         str = fgets(fid); %read EOLN for vertices
@@ -84,12 +90,9 @@ for ii=1:nn
         if A(1) ~= 3 %not native endian!!!!
             error('This vtk file is borked');
         end
-        
+
         vertex_ii = double(vtx);
         vertex_ii = reshape(vertex_ii, 3, numel(vertex_ii)/3);
         fclose(fid);
-        
-    end
-    vertex(ii,:,:)=vertex_ii';
-end
 
+    end
