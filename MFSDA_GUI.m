@@ -251,15 +251,24 @@ function Run_Callback(hObject, eventdata, handles)
     end
     OutputDir=Output0{1,1};
     
-    runMFSDA(ShapeDataName, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
+    ShapeDataFileArray = dir(sprintf('%s/*.vtk',ShapeDataName));
+    ShapeDataFileArray = {ShapeDataFileArray.name}';
+    nn=size(ShapeDataFileArray,1);
+    
+    for ii=1:nn
+        filename=sprintf('%s/%s',ShapeDataName,ShapeDataFileArray{ii});
+        ShapeDataFileArray{ii} = filename;
+    end
+    
+    runMFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
     
     guidata(hObject,handles);
     % Hint: get(hObject,'Value') returns toggle state of Run
 
-function runMFSDA(ShapeDataName, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
+function runMFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
 
 
-    Ydesign = stat_read_vtk(ShapeDataName);    % n*L*d matrix
+    Ydesign = stat_read_vtk_filearray(ShapeDataFileArray);    % n*L*d matrix
     % Ydesign: the text file containing surface shape information of all vertices.
     % Ydesign is a n x L x m matrix, here m=d
     % n denotes the number of subjects
