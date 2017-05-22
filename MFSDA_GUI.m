@@ -110,7 +110,7 @@ function CoordData_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 button_state = get(hObject,'Value');
 if button_state == get(hObject,'Max')
-    CoordDataDir= uigetdir(' ','Select coordinate data folder');
+    CoordDataDir= uigetfile({'*.vtk';'*.*'},'Select shape template (sphere)');
     if CoordDataDir~=0
         set(handles.CoordData,'UserData',CoordDataDir);
     end
@@ -270,7 +270,7 @@ function runMFSDA(ShapeDataName, CoordDataName, CovariatesName, CovariateofInter
     %%
     fprintf('+++++++Read the sphere coordinate data+++++++\n');
 
-    Coord = squeeze(stat_read_vtk(CoordDataName));   % L*d matrix
+    Coord = stat_read_vtk_file(CoordDataName);   % L*d matrix
     % Coord: the text file containing coordinates of all vertices aligned on the sphere.
     % Coord is a L x d matrix
     % L denotes the number of vertices
