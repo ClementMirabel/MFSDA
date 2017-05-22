@@ -27,7 +27,5 @@ function vertex = stat_read_vtk(file_dir)
         FileNames{ii} = filename;
     end
 
-    for ii=1:nn
-        vertex(ii,:,:) = stat_read_vtk_file(FileNames(ii));
-    end
+    vertex = stat_read_vtk_filearray(FileNames);
 end
