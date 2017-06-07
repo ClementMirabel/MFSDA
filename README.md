@@ -28,6 +28,8 @@ Home page for JSONlab
 https://www.mathworks.com/matlabcentral/fileexchange/33381-jsonlab--a-toolbox-to-encode-decode-json-files
 
 Download link for version 1.5
+
 https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/33381/versions/22/download/zip
 
-Extract the toolbox in the root directory of the MFSDA app. 
+Extract the toolbox in the root directory of the MFSDA app, the directory must be named 'jsonlab-1.5'. 
+
