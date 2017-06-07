@@ -20,6 +20,7 @@ covariates=""
 covariateInterest=""
 covariateType=""
 outputDir="./out"
+exportJSON=false
 
 previous=""
 for var in "$@"
@@ -53,6 +54,11 @@ do
         then
                 outputDir=$var
         fi
+
+        if [ "$var" == "-exportJSON" ];
+        then
+                exportJSON=true
+        fi
         
         if [ "$var" == "-h" ] || [ "$var" == "--help" ];
         then
@@ -74,6 +80,7 @@ echo "covariates=$covariates"
 echo "covariateInterest=$covariateInterest"
 echo "covariateType=$covariateType"
 echo "outputDir=$outputDir"
+echo "exportJSON=$exportJSON"
 
 if [ ! -d $outputDir ];
 then
@@ -100,6 +107,6 @@ scriptname=$(basename $0)
 scriptdir=${BASH_SOURCE[0]}
 scriptdir=${scriptdir/$scriptname/}
 
-command="$matlab_app -nodisplay -r \"addpath('\"$scriptdir\"');MFSDA_CMD('\"$shapeData\"','\"$coordData\"','\"$covariates\"','\"$covariateInterest\"','\"$covariateType\"','\"$outputDir\"');\""
+command="$matlab_app -nodisplay -r \"addpath('\"$scriptdir\"');MFSDA_CMD('\"$shapeData\"','\"$coordData\"','\"$covariates\"','\"$covariateInterest\"','\"$covariateType\"','\"$outputDir\"', $exportJSON);exit;\""
 echo $command
 eval $command
