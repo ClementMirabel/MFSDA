@@ -18,3 +18,16 @@ In this panel, you need to select the folder where to save all  the output files
 3. Export Results
 
 In this panel, you can plot the results you are interested in. 
+
+4. Export results in JSON format
+
+Please download the package JSON lab to export the resulting mat files to JSON format.
+
+Home page for JSONlab
+
+https://www.mathworks.com/matlabcentral/fileexchange/33381-jsonlab--a-toolbox-to-encode-decode-json-files
+
+Download link for version 1.5
+https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/33381/versions/22/download/zip
+
+Extract the toolbox in the root directory of the MFSDA app. 
