@@ -1,4 +1,4 @@
-function MFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
+function outputFiles = MFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, CovariateofInterestName, CovariateTypeName, OutputDir)
 
 
     Ydesign = stat_read_vtk_filearray(ShapeDataFileArray);    % n*L*d matrix
@@ -159,3 +159,5 @@ function MFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, CovariateofInt
     save(str,'Gpvals','Lpvals_fdr','Lpval_area','clu_pvals')
 
     fprintf('+++++++Your job is finished!!+++++++\n');
+    
+    outputFiles = {fullfile(OutputDir,'efit.mat') fullfile(OutputDir,'pvalues.mat')};
