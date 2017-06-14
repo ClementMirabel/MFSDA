@@ -106,7 +106,11 @@ echo "Using matlab at $matlab_app"
 scriptname=$(basename $0)
 scriptdir=${BASH_SOURCE[0]}
 scriptdir=${scriptdir/$scriptname/}
-scriptdir=$(readlink $scriptdir)
+
+if [ -h $scriptdir ];
+then
+        scriptdir=$(readlink $scriptdir)
+fi
 
 currentdir=$(pwd)
 
