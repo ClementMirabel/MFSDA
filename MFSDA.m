@@ -67,8 +67,7 @@ function outputFiles = MFSDA(ShapeDataFileArray, CoordDataName, CovariatesName, 
         n_Con=temp.(temp1.name);
     elseif strcmp(CovariateTypeName(end-2:end),'txt')
         n_Con=importdata(CovariateTypeName);
-    else
-    else
+    else    
         n_Con=load(CovariateTypeName);
     end
 
