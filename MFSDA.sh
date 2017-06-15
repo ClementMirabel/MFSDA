@@ -7,7 +7,7 @@ function help
         echo "Options: "
         echo "-shapeData <filename, .txt list with vtk filenames, 1 file per line>"
         echo "-coordData <filename, .vtk shape template>"
-        echo "-covariates <filename, .txt with covariates dim = n x p0 (comma separated or tabulation, without header, the first column is the group)>"
+        echo "-covariate <filename, .txt with covariate dim = n x p0 (comma separated or tabulation, without header, the first column is the group)>"
         echo "-covariateInterest <filename, .txt (dim = 1xp0 vector comma separated, 1 or 0 value to indicate covariate of interest)>"
         echo "-covariateType <filename, .txt (dim= 1xsum(covariateInterest) vector comma separated, 1 or 0 to indicate type of covariate double or int)>"
         echo "-outputDir <output directory>"
@@ -16,7 +16,7 @@ function help
 
 shapeData=""
 coordData=""
-covariates=""
+covariate=""
 covariateInterest=""
 covariateType=""
 outputDir="./out"
@@ -35,9 +35,9 @@ do
                 coordData=$var
         fi
 
-        if [ "$previous" == "-covariates" ];
+        if [ "$previous" == "-covariate" ];
         then
-                covariates=$var
+                covariate=$var
         fi
 
         if [ "$previous" == "-covariateInterest" ];
@@ -68,7 +68,7 @@ do
         previous=$var
 done
 
-if [ "$shapeData" == "" ] || [ "$coordData" == "" ] || [ "$covariates" == "" ] || [ "$covariateInterest" == "" ] || [ "$covariateType" == "" ];
+if [ "$shapeData" == "" ] || [ "$coordData" == "" ] || [ "$covariate" == "" ] || [ "$covariateInterest" == "" ] || [ "$covariateType" == "" ];
 then
         help
 fi
@@ -76,7 +76,7 @@ fi
 echo "Using the following values: type -h or --help for options"
 echo "shapeData=$shapeData"
 echo "coordData=$coordData"
-echo "covariates=$covariates"
+echo "covariate=$covariate"
 echo "covariateInterest=$covariateInterest"
 echo "covariateType=$covariateType"
 echo "outputDir=$outputDir"
@@ -114,6 +114,6 @@ fi
 scriptdir=${scriptdir/$scriptname/}
 currentdir=$(pwd)
 
-command="$matlab_app -nodisplay -r \"addpath('\"$scriptdir\"');addpath('\"$currentdir\"');MFSDA_CMD('\"$shapeData\"','\"$coordData\"','\"$covariates\"','\"$covariateInterest\"','\"$covariateType\"','\"$outputDir\"', $exportJSON);exit;\""
+command="$matlab_app -nodisplay -r \"addpath('\"$scriptdir\"');addpath('\"$currentdir\"');MFSDA_CMD('\"$shapeData\"','\"$coordData\"','\"$covariate\"','\"$covariateInterest\"','\"$covariateType\"','\"$outputDir\"', $exportJSON);exit;\""
 echo $command
 eval $command
