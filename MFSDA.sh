@@ -105,13 +105,13 @@ fi
 echo "Using matlab at $matlab_app"
 scriptname=$(basename $0)
 scriptdir=${BASH_SOURCE[0]}
-scriptdir=${scriptdir/$scriptname/}
 
 if [ -h $scriptdir ];
 then
         scriptdir=$(readlink $scriptdir)
 fi
 
+scriptdir=${scriptdir/$scriptname/}
 currentdir=$(pwd)
 
 command="$matlab_app -nodisplay -r \"addpath('\"$scriptdir\"');addpath('\"$currentdir\"');MFSDA_CMD('\"$shapeData\"','\"$coordData\"','\"$covariates\"','\"$covariateInterest\"','\"$covariateType\"','\"$outputDir\"', $exportJSON);exit;\""
