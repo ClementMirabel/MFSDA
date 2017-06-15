@@ -18,12 +18,9 @@ function MFSDA_CMD(ShapeDataName, CoordDataName, CovariatesName, CovariateofInte
     end
     
 function exportToJSON(filename)
-    try
-        [path, name, ~] = fileparts(filename);
-        jsonoutputfilename = fullfile(path, [name '.json']);
-        fprintf('\n+++Exporting %s to JSON+++\n', filename);
-        
-        savejson('', load(jsonoutputfilename), );
+    try        
+        fprintf('\n+++Exporting %s to JSON+++\n', filename);        
+        savejson('', load(filename));
     catch e
         fprintf('\nError exporting to JSON, please check output data: %s\n', e.message);
     end
